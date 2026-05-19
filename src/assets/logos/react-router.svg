@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <defs>
+    <linearGradient id="rr-red" x1="0" y1="0" x2="256" y2="256" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#CA4245"/>
+      <stop offset="1" stop-color="#B53639"/>
+    </linearGradient>
+  </defs>
+  <!-- Shield shape -->
+  <path d="M128 16
+           L 220 52
+           L 220 116
+           Q 220 176 128 240
+           Q 36 176 36 116
+           L 36 52
+           Z"
+        fill="url(#rr-red)"/>
+  <!-- White arrow pointing inward (top-right to center-left) -->
+  <g fill="none" stroke="#FFFFFF" stroke-width="16" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M160 80
+             L 100 128
+             L 160 176"/>
+  </g>
+</svg>

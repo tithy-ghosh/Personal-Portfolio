@@ -1,0 +1,31 @@
+@import "tailwindcss";
+body{
+  background-color: #0a0a0f;
+  color: #D1D5DB;
+}
+html{
+  scroll-behavior: smooth;
+}
+.text-font{
+  background: linear-gradient(90deg, #8B5CF6 0%, #06B6D4 100%);-webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.jetbrains-mono-font{
+  font-family: "JetBrains Mono", monospace;
+}
+
+.sora-font{
+  font-family: "Sora", sans-serif;
+}
+.hero-glow {
+  position: relative;
+  background-color: #000;
+
+  background: 
+    
+    radial-gradient(circle at 80% 60%, #00b4ff2e, transparent 45%),
+    radial-gradient(circle at 50% 100%, #a05aff1f, transparent 50%),
+    linear-gradient(-180deg, #070710 0%, #0b0b14 50%, #06060c 100%);
+  
+}
