@@ -1,7 +1,19 @@
 import { useState, useRef, useEffect } from "react";
+import { useInView } from "../../hooks/useInView";
 
 // ─── Your Projects Data ───────────────────────────────────────────────────────
 const projects = [
+  {
+    icon: "📊",
+    iconBg: "#8b5cf6",
+    borderColor: "#8b5cf644",
+    name: "GitHub Profile Analyzer",
+    desc: "Analyze any public GitHub profile — view commit activity, language distribution, top repositories, and contribution insights in a clean dashboard.",
+    tags: ["React", "GitHub API", "Charts"],
+    tagBg: "#3b0764",
+    tagText: "#a78bfa",
+    link: "https://github-profile-analyze-2.netlify.app/",
+  },
   {
     icon: "🔐",
     iconBg: "#0ea5e9",
@@ -11,7 +23,7 @@ const projects = [
     tags: ["Password Manager", "AES Encryption", "Generator"],
     tagBg: "#0c4a6e",
     tagText: "#38bdf8",
-    
+    link: "https://vault-manager-2.vercel.app/",
   },
   {
     icon: "✅",
@@ -22,6 +34,7 @@ const projects = [
     tags: ["Task Manager", "Deadline Tracker", "Productivity"],
     tagBg: "#14532d",
     tagText: "#4ade80",
+    link: "https://task-zen-sooty-kappa.vercel.app/",
   },
 ];
 
@@ -154,6 +167,7 @@ function UserMessage({ text }) {
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 export default function HeroChatCard() {
+  const [cardRef, cardVisible] = useInView(0.1)
   const [messages, setMessages] = useState([
     {
       role: "ai",
@@ -234,7 +248,16 @@ export default function HeroChatCard() {
         }
       `}</style>
 
-      <div className="bg-[#13112a] rounded-2xl border border-[#2e2b4a] overflow-hidden shadow-2xl w-full max-w-sm flex flex-col h-[400px] mt-15" style={{fontFamily: '"Sora", sans-serif'}}>
+      <div
+        ref={cardRef}
+        className="bg-[#13112a] rounded-2xl border border-[#2e2b4a] overflow-hidden shadow-2xl w-full max-w-full sm:max-w-sm lg:max-w-md flex flex-col h-[380px] sm:h-[420px] lg:h-[460px]"
+        style={{
+          fontFamily: '"Sora", sans-serif',
+          opacity: cardVisible ? 1 : 0,
+          transform: cardVisible ? 'translateY(0) scale(1)' : 'translateY(32px) scale(0.97)',
+          transition: 'opacity 0.7s ease 0.3s, transform 0.7s ease 0.3s',
+        }}
+      >
 
         {/* ── Title Bar ── */}
         <div className="flex items-center gap-2 px-4 py-3 bg-[#1a1730] border-b border-[#2e2b4a] flex-shrink-0">

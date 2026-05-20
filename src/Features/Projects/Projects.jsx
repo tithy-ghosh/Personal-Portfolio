@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from 'react'
 import SectionDivide from '../../Components/SectionDivide'
+import { useInView } from '../../hooks/useInView'
 
 const projects = [
   {
@@ -182,11 +183,28 @@ function SpotlightCard({ project, index }) {
 }
 
 export default function Projects() {
+  const [headerRef, headerVisible] = useInView(0.2)
+
   return (
     <div id="projects" className="w-full py-20 bg-[#0a0a0f]">
-      <h1 className="sora-font text-center text-font text-5xl font-bold mb-4">Projects</h1>
+      <div
+        ref={headerRef}
+        className="px-4 sm:px-10 w-full"
+        style={{
+          opacity: headerVisible ? 1 : 0,
+          transform: headerVisible ? 'translateY(0)' : 'translateY(20px)',
+          transition: 'opacity 0.6s ease, transform 0.6s ease',
+        }}
+      >
+        <div className="flex items-center gap-2 mb-5">
+          <span className="w-5 h-[1px] bg-[#8b5cf6] inline-block" />
+          <span className="text-[11px] tracking-[0.15em] uppercase text-[#8b5cf6]" style={{ fontFamily: '"JetBrains Mono", monospace' }}>
+            Projects
+          </span>
+        </div>
+      </div>
       <SectionDivide />
-      <div className="max-w-6xl mx-auto px-10 mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="max-w-6xl mx-auto px-4 sm:px-10 mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {projects.map((project, i) => (
           <SpotlightCard key={project.title} project={project} index={i} />
         ))}

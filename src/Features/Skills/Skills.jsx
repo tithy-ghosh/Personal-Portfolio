@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import SectionDivide from '../../Components/SectionDivide'
+import { useInView } from '../../hooks/useInView'
 
 import jsLogo       from '../../assets/javascript-logo.svg'
 import htmlLogo     from '../../assets/logos/html.svg'
@@ -113,64 +114,81 @@ function SkillCard({ skill, index }) {
 export default function SkillsSection() {
   const [active, setActive] = useState('all')
   const [key, setKey] = useState(0)
+  const [headerRef, headerVisible] = useInView(0.2)
+  const [controlsRef, controlsVisible] = useInView(0.1)
 
   const filtered = active === 'all' ? SKILLS : SKILLS.filter(s => s.cat === active)
 
   function handleFilter(cat) {
     setActive(cat)
-    setKey(k => k + 1)   // remount cards so stagger replays on filter change
+    setKey(k => k + 1)
   }
 
   return (
     <section
       id="skills"
       className="w-full py-20 sora-font"
-      style={{
-        background: 'linear-gradient(180deg, #0a0a0f 0%, #0f0d1a 50%, #0a0a0f 100%)',
-      }}
+      style={{ background: 'linear-gradient(180deg, #0a0a0f 0%, #0f0d1a 50%, #0a0a0f 100%)' }}
     >
-      {/* ── Header ── */}
-      <h1 className="sora-font text-center text-font text-5xl font-bold mb-4">Skills</h1>
+      {/* Header */}
+      <div
+        ref={headerRef}
+        className="px-4 sm:px-10 w-full"
+        style={{
+          opacity: headerVisible ? 1 : 0,
+          transform: headerVisible ? 'translateY(0)' : 'translateY(20px)',
+          transition: 'opacity 0.6s ease, transform 0.6s ease',
+        }}
+      >
+        <div className="flex items-center gap-2 mb-5">
+          <span className="w-5 h-[1px] bg-[#8b5cf6] inline-block" />
+          <span className="text-[11px] tracking-[0.15em] uppercase text-[#8b5cf6]" style={{ fontFamily: '"JetBrains Mono", monospace' }}>
+            Skills
+          </span>
+        </div>
+      </div>
       <SectionDivide />
 
-      <div className="max-w-5xl mx-auto px-10 mt-14">
+      <div className="max-w-5xl mx-auto px-4 sm:px-10 mt-14">
 
-        {/* ── Filter tabs ── */}
-        <div className="flex flex-wrap gap-2 justify-center mb-8">
-          {CATEGORIES.map(cat => (
-            <button
-              key={cat}
-              onClick={() => handleFilter(cat)}
-              className={`px-5 py-1.5 rounded-full text-[11px] font-semibold tracking-wider uppercase border transition-all duration-200 cursor-pointer ${
-                active === cat
-                  ? 'border-white/60 text-white bg-white/5'
-                  : 'border-white/10 text-gray-500 hover:border-white/30 hover:text-gray-300 bg-transparent'
-              }`}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
-
-        {/* ── Tier legend ── */}
-        <div className="flex items-center justify-center gap-6 mb-10">
-          {Object.entries(TIER_CONFIG).map(([tier, cfg]) => (
-            <div key={tier} className="flex items-center gap-2">
-              <span
-                className="w-2 h-2 rounded-full flex-shrink-0"
-                style={{ background: cfg.dot }}
-              />
-              <span
-                className="text-[11px]"
-                style={{ fontFamily: '"JetBrains Mono",monospace', color: '#4a4770' }}
+        {/* Filter tabs + legend */}
+        <div
+          ref={controlsRef}
+          style={{
+            opacity: controlsVisible ? 1 : 0,
+            transform: controlsVisible ? 'translateY(0)' : 'translateY(16px)',
+            transition: 'opacity 0.5s ease 0.1s, transform 0.5s ease 0.1s',
+          }}
+        >
+          <div className="flex flex-wrap gap-2 justify-center mb-8">
+            {CATEGORIES.map(cat => (
+              <button
+                key={cat}
+                onClick={() => handleFilter(cat)}
+                className={`px-5 py-1.5 rounded-full text-[11px] font-semibold tracking-wider uppercase border transition-all duration-200 cursor-pointer ${
+                  active === cat
+                    ? 'border-white/60 text-white bg-white/5'
+                    : 'border-white/10 text-gray-500 hover:border-white/30 hover:text-gray-300 bg-transparent'
+                }`}
               >
-                {cfg.label}
-              </span>
-            </div>
-          ))}
+                {cat}
+              </button>
+            ))}
+          </div>
+
+          <div className="flex items-center justify-center gap-6 mb-10">
+            {Object.entries(TIER_CONFIG).map(([tier, cfg]) => (
+              <div key={tier} className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: cfg.dot }} />
+                <span className="text-[11px]" style={{ fontFamily: '"JetBrains Mono",monospace', color: '#4a4770' }}>
+                  {cfg.label}
+                </span>
+              </div>
+            ))}
+          </div>
         </div>
 
-        {/* ── Cards grid ── */}
+        {/* Cards grid */}
         <div
           key={key}
           className="grid gap-3"
@@ -180,8 +198,6 @@ export default function SkillsSection() {
             <SkillCard key={`${skill.label}-${key}`} skill={skill} index={i} />
           ))}
         </div>
-
-        
       </div>
 
       <div className="mt-16">

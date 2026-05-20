@@ -1,10 +1,15 @@
 @import "tailwindcss";
+*, *::before, *::after {
+  box-sizing: border-box;
+}
 body{
   background-color: #0a0a0f;
   color: #D1D5DB;
+  overflow-x: hidden;
 }
 html{
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 .text-font{
   background: linear-gradient(90deg, #8B5CF6 0%, #06B6D4 100%);-webkit-background-clip: text;
@@ -26,13 +31,120 @@ html{
     linear-gradient(-180deg, #070710 0%, #0b0b14 50%, #06060c 100%);
 }
 
-/* ── Education section animations ── */
+/* ── Global animation keyframes ── */
+
+/* Fade up */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Fade down */
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Fade left (slide from right) */
+@keyframes fadeLeft {
+  from { opacity: 0; transform: translateX(60px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* Fade right (slide from left) */
+@keyframes fadeRight {
+  from { opacity: 0; transform: translateX(-60px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* Zoom in */
+@keyframes zoomIn {
+  from { opacity: 0; transform: scale(0.8); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* Flip in X */
+@keyframes flipInX {
+  from { opacity: 0; transform: perspective(600px) rotateX(-70deg); }
+  to   { opacity: 1; transform: perspective(600px) rotateX(0deg); }
+}
+
+/* Flip in Y */
+@keyframes flipInY {
+  from { opacity: 0; transform: perspective(600px) rotateY(-70deg); }
+  to   { opacity: 1; transform: perspective(600px) rotateY(0deg); }
+}
+
+/* Swing in from top */
+@keyframes swingIn {
+  0%   { opacity: 0; transform: rotate(-10deg) translateY(-30px); }
+  60%  { transform: rotate(3deg) translateY(4px); }
+  100% { opacity: 1; transform: rotate(0deg) translateY(0); }
+}
+
+/* Blur in */
+@keyframes blurIn {
+  from { opacity: 0; filter: blur(16px); transform: scale(1.04); }
+  to   { opacity: 1; filter: blur(0px);  transform: scale(1); }
+}
+
+/* Stretch in */
+@keyframes stretchIn {
+  from { opacity: 0; transform: scaleX(0.4) scaleY(1.2); }
+  to   { opacity: 1; transform: scaleX(1)   scaleY(1); }
+}
+
+/* Rise (clip from bottom) */
+@keyframes riseUp {
+  from { opacity: 0; transform: translateY(100%) skewY(3deg); }
+  to   { opacity: 1; transform: translateY(0)    skewY(0deg); }
+}
+
+/* Bounce in */
+@keyframes bounceIn {
+  0%   { opacity: 0; transform: scale(0.3); }
+  50%  { opacity: 1; transform: scale(1.08); }
+  70%  { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}
+
+/* Glide in (smooth spring-like) */
+@keyframes glideIn {
+  from { opacity: 0; transform: translateY(24px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0)    scale(1); }
+}
+
+/* Utility classes */
+.anim-fade-up       { animation: fadeUp   0.7s cubic-bezier(0.16,1,0.3,1) both; }
+.anim-fade-down     { animation: fadeDown 0.7s cubic-bezier(0.16,1,0.3,1) both; }
+.anim-fade-left     { animation: fadeLeft 0.7s cubic-bezier(0.16,1,0.3,1) both; }
+.anim-fade-right    { animation: fadeRight 0.7s cubic-bezier(0.16,1,0.3,1) both; }
+.anim-zoom-in       { animation: zoomIn   0.6s cubic-bezier(0.16,1,0.3,1) both; }
+.anim-flip-x        { animation: flipInX  0.7s cubic-bezier(0.16,1,0.3,1) both; }
+.anim-flip-y        { animation: flipInY  0.7s cubic-bezier(0.16,1,0.3,1) both; }
+.anim-swing         { animation: swingIn  0.8s cubic-bezier(0.16,1,0.3,1) both; }
+.anim-blur-in       { animation: blurIn   0.8s ease both; }
+.anim-stretch       { animation: stretchIn 0.6s cubic-bezier(0.16,1,0.3,1) both; }
+.anim-rise          { animation: riseUp   0.7s cubic-bezier(0.16,1,0.3,1) both; }
+.anim-bounce-in     { animation: bounceIn 0.7s cubic-bezier(0.34,1.56,0.64,1) both; }
+.anim-glide-in      { animation: glideIn  0.7s cubic-bezier(0.16,1,0.3,1) both; }
+
+/* Paused until JS adds .is-visible */
+[data-anim] { animation-play-state: paused; opacity: 0; }
+[data-anim].is-visible { animation-play-state: running; }
+
+/* Education section animations */
 @keyframes blink {
   0%, 100% { opacity: 1; }
   50%       { opacity: 0; }
 }
-
 @keyframes pulse {
   0%, 100% { opacity: 1; transform: scale(1); }
   50%       { opacity: 0.5; transform: scale(0.8); }
+}
+
+/* Hide custom cursor on touch devices */
+@media (hover: none) and (pointer: coarse) {
+  * { cursor: auto !important; }
+  .cursor-minimal { display: none !important; }
 }
