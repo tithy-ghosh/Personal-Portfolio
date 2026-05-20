@@ -14,18 +14,25 @@ html{
 .jetbrains-mono-font{
   font-family: "JetBrains Mono", monospace;
 }
-
 .sora-font{
   font-family: "Sora", sans-serif;
 }
 .hero-glow {
   position: relative;
   background-color: #000;
-
   background: 
-    
     radial-gradient(circle at 80% 60%, #00b4ff2e, transparent 45%),
     radial-gradient(circle at 50% 100%, #a05aff1f, transparent 50%),
     linear-gradient(-180deg, #070710 0%, #0b0b14 50%, #06060c 100%);
-  
+}
+
+/* ── Education section animations ── */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.5; transform: scale(0.8); }
 }
