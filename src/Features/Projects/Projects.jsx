@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from 'react'
 import SectionDivide from '../../Components/SectionDivide'
+
 import { useInView } from '../../hooks/useInView'
 
 const projects = [
@@ -31,7 +32,7 @@ const projects = [
   },
   {
     title: 'TaskZen',
-    desc: 'Stay on top of every deadline. TaskZen shows your upcoming tasks, highlights overdue items, and tracks everything you\'ve completed.',
+    desc: "Stay on top of every deadline. TaskZen shows your upcoming tasks, highlights overdue items, and tracks everything you've completed.",
     tags: ['Task Manager', 'Deadline Tracker', 'Productivity'],
     live: 'https://task-zen-sooty-kappa.vercel.app/',
     code: 'https://github.com/tithy-ghosh/Task-Zen',
@@ -46,7 +47,7 @@ const projects = [
 
 function SpotlightCard({ project, index }) {
   const cardRef = useRef(null)
-  const [spot, setSpot] = useState({ x: 0, y: 0, opacity: 0 })
+  const [spot,    setSpot]    = useState({ x: 0, y: 0, opacity: 0 })
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
@@ -59,11 +60,22 @@ function SpotlightCard({ project, index }) {
   }, [])
 
   function onMouseMove(e) {
-    const rect = cardRef.current.getBoundingClientRect()
-    setSpot({ x: e.clientX - rect.left, y: e.clientY - rect.top, opacity: 1 })
+    const rect    = cardRef.current.getBoundingClientRect()
+    const x       = e.clientX - rect.left
+    const y       = e.clientY - rect.top
+    const centerX = rect.width  / 2
+    const centerY = rect.height / 2
+    const rotateX = ((y - centerY) / centerY) * -7
+    const rotateY = ((x - centerX) / centerX) * 7
+
+    cardRef.current.style.transform  = `perspective(900px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`
+    cardRef.current.style.transition = 'transform 0.08s ease'
+    setSpot({ x, y, opacity: 1 })
   }
 
   function onMouseLeave() {
+    cardRef.current.style.transform  = 'perspective(900px) rotateX(0deg) rotateY(0deg) scale(1)'
+    cardRef.current.style.transition = 'transform 0.55s cubic-bezier(0.34,1.56,0.64,1)'
     setSpot(s => ({ ...s, opacity: 0 }))
   }
 
@@ -75,18 +87,19 @@ function SpotlightCard({ project, index }) {
       className="group relative rounded-2xl p-6 flex flex-col overflow-hidden cursor-default"
       style={{
         background: 'rgba(255,255,255,0.02)',
-        border: '1px solid rgba(255,255,255,0.08)',
-        opacity: visible ? 1 : 0,
-        transform: visible ? 'translateY(0)' : 'translateY(28px)',
+        border:     '1px solid rgba(255,255,255,0.08)',
+        opacity:    visible ? 1 : 0,
+        transform:  visible ? 'translateY(0)' : 'translateY(28px)',
         transition: `opacity 0.5s ease ${index * 120}ms, transform 0.5s ease ${index * 120}ms`,
+        willChange: 'transform',
       }}
     >
       {/* Mouse spotlight */}
       <div
         className="pointer-events-none absolute inset-0 rounded-2xl transition-opacity duration-300"
         style={{
-          opacity: spot.opacity,
-          background: `radial-gradient(280px circle at ${spot.x}px ${spot.y}px, ${project.accent}18, transparent 70%)`,
+          opacity:    spot.opacity,
+          background: `radial-gradient(280px circle at ${spot.x}px ${spot.y}px, ${project.accent}1a, transparent 70%)`,
         }}
       />
 
@@ -111,17 +124,10 @@ function SpotlightCard({ project, index }) {
 
       {/* Content */}
       <div className="relative z-10 flex flex-col flex-1">
-        <h3
-          className="text-lg font-bold text-white mb-2 sora-font transition-all duration-300"
-          style={{
-            '--accent': project.accent,
-          }}
-        >
-          <span className="group-hover:text-transparent group-hover:bg-clip-text transition-all duration-300"
-            style={{
-              backgroundImage: `linear-gradient(90deg, ${project.accent}, #fff)`,
-              WebkitBackgroundClip: 'text',
-            }}
+        <h3 className="text-lg font-bold text-white mb-2 sora-font">
+          <span
+            className="group-hover:text-transparent group-hover:bg-clip-text transition-all duration-300"
+            style={{ backgroundImage: `linear-gradient(90deg, ${project.accent}, #fff)`, WebkitBackgroundClip: 'text' }}
           >
             {project.title}
           </span>
@@ -139,8 +145,8 @@ function SpotlightCard({ project, index }) {
               className="px-2.5 py-1 rounded-full text-[11px] font-medium"
               style={{
                 background: `${project.accent}14`,
-                border: `1px solid ${project.accent}30`,
-                color: project.accent,
+                border:     `1px solid ${project.accent}30`,
+                color:       project.accent,
               }}
             >
               {tag}
@@ -191,24 +197,31 @@ export default function Projects() {
         ref={headerRef}
         className="px-4 sm:px-10 w-full"
         style={{
-          opacity: headerVisible ? 1 : 0,
-          transform: headerVisible ? 'translateY(0)' : 'translateY(20px)',
+          position:   'relative',
+          opacity:    headerVisible ? 1 : 0,
+          transform:  headerVisible ? 'translateY(0)' : 'translateY(20px)',
           transition: 'opacity 0.6s ease, transform 0.6s ease',
         }}
       >
-        <div className="flex items-center gap-2 mb-5">
+        <div className="flex items-center gap-2 mb-5" style={{ position: 'relative' }}>
           <span className="w-5 h-[1px] bg-[#8b5cf6] inline-block" />
-          <span className="text-[11px] tracking-[0.15em] uppercase text-[#8b5cf6]" style={{ fontFamily: '"JetBrains Mono", monospace' }}>
+          <span
+            className="text-[11px] tracking-[0.15em] uppercase text-[#8b5cf6]"
+            style={{ fontFamily: '"JetBrains Mono", monospace' }}
+          >
             Projects
           </span>
         </div>
       </div>
+
       <SectionDivide />
+
       <div className="max-w-6xl mx-auto px-4 sm:px-10 mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {projects.map((project, i) => (
           <SpotlightCard key={project.title} project={project} index={i} />
         ))}
       </div>
+
       <div className="mt-16">
         <SectionDivide />
       </div>

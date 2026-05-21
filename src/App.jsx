@@ -1,4 +1,5 @@
 import React from 'react'
+import ScrollProgress from './Components/ScrollProgress'
 import CustomCursor from './CustomCursor'
 import Navbar from './Features/Navbar/Navbar'
 import Hero from './Features/Hero/Hero'
@@ -11,7 +12,8 @@ import Footer from './Features/Footer/Footer'
 
 const App = () => {
   return (
-    <div className='hero-glow w-full h-full'>
+    <div className='hero-glow w-full min-h-screen bg-[#0a0a0f] text-white overflow-x-hidden relative'>
+      <ScrollProgress />
       <CustomCursor />
       <Navbar />
       <Hero />

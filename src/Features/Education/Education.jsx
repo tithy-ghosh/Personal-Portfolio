@@ -1,12 +1,13 @@
 import SectionDivide from '../../Components/SectionDivide'
+
 import { useEffect, useRef, useState } from 'react'
 
 const TOTAL_LINES = 14
-const LINE_DELAY_MS = 80   // ms between each line appearing
+const LINE_DELAY_MS = 80
 
 export default function Education() {
   const [visibleLines, setVisibleLines] = useState(0)
-  const [panelVisible, setPanelVisible]   = useState(false)
+  const [panelVisible, setPanelVisible] = useState(false)
   const ref = useRef(null)
   const timerRef = useRef(null)
 
@@ -15,7 +16,6 @@ export default function Education() {
       ([entry]) => {
         if (entry.isIntersecting) {
           observer.disconnect()
-          // stagger lines in one by one
           let count = 0
           timerRef.current = setInterval(() => {
             count++
@@ -44,8 +44,8 @@ export default function Education() {
       className="w-full py-20"
       style={{ background: 'linear-gradient(180deg, #0a0a0f 0%, #0f0d1a 50%, #0a0a0f 100%)' }}
     >
-      <div className="px-4 sm:px-10 w-full">
-        <div className="flex items-center gap-2 mb-5">
+      <div className="px-4 sm:px-10 w-full" style={{ position: 'relative' }}>
+        <div className="flex items-center gap-2 mb-5" style={{ position: 'relative' }}>
           <span className="w-5 h-[1px] bg-[#8b5cf6] inline-block" />
           <span
             className="text-[11px] tracking-[0.15em] uppercase text-[#8b5cf6]"
@@ -62,19 +62,19 @@ export default function Education() {
         ref={ref}
         className="max-w-[800px] mx-auto px-4 sm:px-6 mt-16"
         style={{
-          opacity: visibleLines > 0 ? 1 : 0,
-          transform: visibleLines > 0 ? 'translateY(0)' : 'translateY(28px)',
+          opacity:    visibleLines > 0 ? 1 : 0,
+          transform:  visibleLines > 0 ? 'translateY(0)' : 'translateY(28px)',
           transition: 'opacity 0.5s ease, transform 0.5s ease',
         }}
       >
         <div
           className="rounded-2xl overflow-hidden"
           style={{
-            border: '1px solid rgba(139,92,246,0.25)',
-            boxShadow: '0 0 60px rgba(139,92,246,0.08), 0 0 120px rgba(6,182,212,0.04)',
+            border:     '1px solid rgba(139,92,246,0.25)',
+            boxShadow:  '0 0 60px rgba(139,92,246,0.08), 0 0 120px rgba(6,182,212,0.04)',
           }}
         >
-          {/* ── Title Bar ── */}
+          {/* Title Bar */}
           <div
             className="flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-2 sm:py-3"
             style={{ background: '#1a1730', borderBottom: '1px solid rgba(255,255,255,0.05)' }}
@@ -88,10 +88,10 @@ export default function Education() {
               <div
                 className="flex items-center gap-1.5 px-3 py-1 text-[11px] text-[#d1d5db]"
                 style={{
-                  fontFamily: '"JetBrains Mono", monospace',
-                  background: 'rgba(139,92,246,0.08)',
+                  fontFamily:   '"JetBrains Mono", monospace',
+                  background:   'rgba(139,92,246,0.08)',
                   borderBottom: '1px solid #8B5CF6',
-                  borderRight: '1px solid rgba(255,255,255,0.05)',
+                  borderRight:  '1px solid rgba(255,255,255,0.05)',
                 }}
               >
                 <span className="w-[5px] h-[5px] rounded-full bg-[#8B5CF6]" />
@@ -99,10 +99,7 @@ export default function Education() {
               </div>
               <div
                 className="px-3 py-1 text-[11px] text-[#3d3a5e]"
-                style={{
-                  fontFamily: '"JetBrains Mono", monospace',
-                  borderRight: '1px solid rgba(255,255,255,0.05)',
-                }}
+                style={{ fontFamily: '"JetBrains Mono", monospace', borderRight: '1px solid rgba(255,255,255,0.05)' }}
               >
                 read
               </div>
@@ -115,19 +112,19 @@ export default function Education() {
             </div>
           </div>
 
-          {/* ── Body ── */}
+          {/* Body */}
           <div className="flex flex-col md:flex-row" style={{ background: '#0d0b1f' }}>
 
             {/* Code + Gutter */}
             <div className="flex-1 min-w-0">
               <pre
                 style={{
-                  margin: 0,
-                  padding: '16px 0',
-                  fontFamily: '"JetBrains Mono", monospace',
-                  fontSize: '12px',
-                  lineHeight: '22px',
-                  background: 'transparent',
+                  margin:      0,
+                  padding:     '16px 0',
+                  fontFamily:  '"JetBrains Mono", monospace',
+                  fontSize:    '12px',
+                  lineHeight:  '22px',
+                  background:  'transparent',
                 }}
               >
                 <AnimLine i={1}  v={visibleLines}><C w>{'{'}</C></AnimLine>
@@ -147,13 +144,13 @@ export default function Education() {
               </pre>
             </div>
 
-            {/* ── Right Panel ── */}
+            {/* Right Panel */}
             <div
               className="w-full md:w-[220px] flex-shrink-0 flex flex-col items-center justify-center gap-5 py-6 px-5 border-t border-white/5 md:border-t-0 md:border-l"
               style={{
                 background: '#0f0d1a',
-                opacity: panelVisible ? 1 : 0,
-                transform: panelVisible ? 'translateY(0)' : 'translateY(16px)',
+                opacity:    panelVisible ? 1 : 0,
+                transform:  panelVisible ? 'translateY(0)' : 'translateY(16px)',
                 transition: 'opacity 0.6s ease, transform 0.6s ease',
               }}
             >
@@ -163,8 +160,8 @@ export default function Education() {
                 style={{
                   fontFamily: '"JetBrains Mono", monospace',
                   background: 'rgba(139,92,246,0.12)',
-                  border: '1px solid rgba(139,92,246,0.3)',
-                  color: '#a78bfa',
+                  border:     '1px solid rgba(139,92,246,0.3)',
+                  color:      '#a78bfa',
                 }}
               >
                 <PulseDot />
@@ -176,7 +173,7 @@ export default function Education() {
                 <svg width="110" height="110" viewBox="0 0 110 110" style={{ transform: 'rotate(-90deg)' }}>
                   <defs>
                     <linearGradient id="pgGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                      <stop offset="0%" stopColor="#8B5CF6" />
+                      <stop offset="0%"   stopColor="#8B5CF6" />
                       <stop offset="100%" stopColor="#06B6D4" />
                     </linearGradient>
                   </defs>
@@ -202,7 +199,7 @@ export default function Education() {
                 </div>
               </div>
 
-              {/* Meta rows — slide in with stagger */}
+              {/* Meta rows */}
               <div className="w-full flex flex-col gap-2">
                 {[['year', '2 of 4'], ['batch', "'28"], ['location', 'Sylhet, BD']].map(([k, v], idx) => (
                   <div
@@ -210,8 +207,8 @@ export default function Education() {
                     className="flex items-center gap-2 text-[10px]"
                     style={{
                       fontFamily: '"JetBrains Mono", monospace',
-                      opacity: panelVisible ? 1 : 0,
-                      transform: panelVisible ? 'translateX(0)' : 'translateX(-10px)',
+                      opacity:    panelVisible ? 1 : 0,
+                      transform:  panelVisible ? 'translateX(0)' : 'translateX(-10px)',
                       transition: `opacity 0.4s ease ${0.3 + idx * 0.1}s, transform 0.4s ease ${0.3 + idx * 0.1}s`,
                     }}
                   >
@@ -223,7 +220,7 @@ export default function Education() {
             </div>
           </div>
 
-          {/* ── Status Bar ── */}
+          {/* Status Bar */}
           <div
             className="flex items-center gap-4 px-4 py-1.5"
             style={{ background: '#1a1730', borderTop: '1px solid rgba(255,255,255,0.04)' }}
@@ -243,61 +240,21 @@ export default function Education() {
   )
 }
 
-/* ── Animated line: fades + slides in when its index is reached ── */
 function AnimLine({ i, v, children }) {
   const show = v >= i
   return (
-    <div
-      style={{
-        display: 'flex',
-        lineHeight: '22px',
-        opacity: show ? 1 : 0,
-        transform: show ? 'translateX(0)' : 'translateX(-6px)',
-        transition: 'opacity 0.25s ease, transform 0.25s ease',
-      }}
-    >
-      {/* Gutter */}
-      <span
-        style={{
-          display: 'inline-block',
-          minWidth: '2.5rem',
-          paddingRight: '12px',
-          paddingLeft: '4px',
-          textAlign: 'right',
-          color: show ? '#4a4770' : '#2e2b4a',
-          fontSize: '11px',
-          background: '#0a0919',
-          flexShrink: 0,
-          userSelect: 'none',
-          transition: 'color 0.3s ease',
-        }}
-      >
-        {i}
-      </span>
-      {/* Code */}
-      <span
-        style={{
-          paddingLeft: '12px',
-          paddingRight: '16px',
-          color: '#d1d5db',
-          whiteSpace: 'pre-wrap',
-          wordBreak: 'break-word',
-          flex: 1,
-        }}
-      >
-        {children}
-      </span>
+    <div style={{ display: 'flex', lineHeight: '22px', opacity: show ? 1 : 0, transform: show ? 'translateX(0)' : 'translateX(-6px)', transition: 'opacity 0.25s ease, transform 0.25s ease' }}>
+      <span style={{ display: 'inline-block', minWidth: '2.5rem', paddingRight: '12px', paddingLeft: '4px', textAlign: 'right', color: show ? '#4a4770' : '#2e2b4a', fontSize: '11px', background: '#0a0919', flexShrink: 0, userSelect: 'none', transition: 'color 0.3s ease' }}>{i}</span>
+      <span style={{ paddingLeft: '12px', paddingRight: '16px', color: '#d1d5db', whiteSpace: 'pre-wrap', wordBreak: 'break-word', flex: 1 }}>{children}</span>
     </div>
   )
 }
 
-/* ── Colour helpers ── */
-function C({ children, b, s, g, p, c, pk }) {
-  const color = b ? '#7dd3fc' : s ? '#86efac' : g ? '#6b7280' : p ? '#c084fc' : c ? '#3d3a5e' : pk ? '#f9a8d4' : '#d1d5db'
+function C({ children, b, s, g, p, c, pk, w }) {
+  const color = b ? '#7dd3fc' : s ? '#86efac' : g ? '#6b7280' : p ? '#c084fc' : c ? '#3d3a5e' : pk ? '#f9a8d4' : w ? '#d1d5db' : '#d1d5db'
   return <span style={{ color, ...(c ? { fontStyle: 'italic' } : {}) }}>{children}</span>
 }
 
-/* ── Count-up number ── */
 function CountUp({ target, suffix = '', className, mono }) {
   const [val, setVal] = useState(0)
   useEffect(() => {
@@ -311,65 +268,21 @@ function CountUp({ target, suffix = '', className, mono }) {
     }, 40)
     return () => clearInterval(t)
   }, [target])
-  return (
-    <span
-      className={className}
-      style={mono ? { fontFamily: '"JetBrains Mono", monospace' } : {}}
-    >
-      {val}{suffix}
-    </span>
-  )
+  return <span className={className} style={mono ? { fontFamily: '"JetBrains Mono", monospace' } : {}}>{val}{suffix}</span>
 }
 
 function BlinkCursor() {
-  return (
-    <span
-      style={{
-        display: 'inline-block',
-        width: '2px',
-        height: '13px',
-        background: '#8B5CF6',
-        verticalAlign: 'middle',
-        marginLeft: '2px',
-        animation: 'blink 1s steps(1) infinite',
-      }}
-    />
-  )
+  return <span style={{ display: 'inline-block', width: '2px', height: '13px', background: '#8B5CF6', verticalAlign: 'middle', marginLeft: '2px', animation: 'blink 1s steps(1) infinite' }} />
 }
 
 function PulseDot() {
-  return (
-    <span
-      style={{
-        display: 'inline-block',
-        width: '6px',
-        height: '6px',
-        borderRadius: '50%',
-        background: '#8B5CF6',
-        flexShrink: 0,
-        animation: 'pulse 2s infinite',
-      }}
-    />
-  )
+  return <span style={{ display: 'inline-block', width: '6px', height: '6px', borderRadius: '50%', background: '#8B5CF6', flexShrink: 0, animation: 'pulse 2s infinite' }} />
 }
 
 function StatusItem({ children, accent, dot }) {
   return (
-    <div
-      className="flex items-center gap-1.5 text-[10px]"
-      style={{ fontFamily: '"JetBrains Mono", monospace', color: accent ? '#8B5CF6' : '#4a4770' }}
-    >
-      {dot && (
-        <span
-          style={{
-            display: 'inline-block',
-            width: '7px',
-            height: '7px',
-            borderRadius: '50%',
-            background: dot === 'green' ? '#28c840' : '#8B5CF6',
-          }}
-        />
-      )}
+    <div className="flex items-center gap-1.5 text-[10px]" style={{ fontFamily: '"JetBrains Mono", monospace', color: accent ? '#8B5CF6' : '#4a4770' }}>
+      {dot && <span style={{ display: 'inline-block', width: '7px', height: '7px', borderRadius: '50%', background: dot === 'green' ? '#28c840' : '#8B5CF6' }} />}
       {children}
     </div>
   )

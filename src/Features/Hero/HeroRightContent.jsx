@@ -51,7 +51,7 @@ const RESPONSES = {
   },
   Contact: {
     type: "text",
-    text: "You can reach me through:\n\n📧 Email: sgt.tithy.717@gmail.com\n💼 LinkedIn: www.linkedin.com/in/shrabony-ghosh-tithy\n🐙 GitHub: https://github.com/tithyghosh",
+    text: "You can reach me through:\n\n📧 Email: sgt.tithy.717@gmail.com\n💼 LinkedIn: www.linkedin.com/in/shrabony-ghosh-tithy\n🐙 GitHub: https://github.com/tithy-ghosh",
   },
 };
 
@@ -182,7 +182,9 @@ export default function HeroChatCard() {
   const inputRef = useRef(null);
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (messages.length > 1) {
+      bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
   }, [messages, isTyping]);
 
   const getResponse = (text) => {

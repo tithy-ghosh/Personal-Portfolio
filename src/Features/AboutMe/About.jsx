@@ -6,8 +6,8 @@ import { useInView } from '../../hooks/useInView'
 
 const About = () => {
   const [headerRef, headerVisible] = useInView(0.2)
-  const [leftRef, leftVisible]     = useInView(0.15)
-  const [rightRef, rightVisible]   = useInView(0.15)
+  const [leftRef,   leftVisible]   = useInView(0.15)
+  const [rightRef,  rightVisible]  = useInView(0.15)
 
   return (
     <div id='about' className='w-full min-h-screen bg-[#0a0a0f] flex flex-col gap-10 py-10'>
@@ -17,14 +17,18 @@ const About = () => {
         ref={headerRef}
         className='px-4 sm:px-10 w-full'
         style={{
-          opacity: headerVisible ? 1 : 0,
-          transform: headerVisible ? 'translateY(0)' : 'translateY(16px)',
+          opacity:    headerVisible ? 1 : 0,
+          transform:  headerVisible ? 'translateY(0)' : 'translateY(16px)',
           transition: 'opacity 0.6s ease, transform 0.6s ease',
+          position:   'relative',
         }}
       >
-        <div className='flex items-center gap-2 mb-5'>
+        <div className='flex items-center gap-2 mb-5' style={{ position: 'relative' }}>
           <span className='w-5 h-[1px] bg-[#8b5cf6] inline-block' />
-          <span className='text-[11px] tracking-[0.15em] uppercase text-[#8b5cf6]' style={{ fontFamily: '"JetBrains Mono", monospace' }}>
+          <span
+            className='text-[11px] tracking-[0.15em] uppercase text-[#8b5cf6]'
+            style={{ fontFamily: '"JetBrains Mono", monospace' }}
+          >
             About Me
           </span>
         </div>
@@ -39,10 +43,10 @@ const About = () => {
           ref={leftRef}
           className='flex-1'
           style={{
-            opacity: leftVisible ? 1 : 0,
-            transform: leftVisible ? 'translateX(0)' : 'translateX(-40px)',
-            transition: 'opacity 0.7s ease 0.1s, transform 0.7s ease 0.1s',
-            display: 'flex',
+            opacity:       leftVisible ? 1 : 0,
+            transform:     leftVisible ? 'translateX(0)' : 'translateX(-40px)',
+            transition:    'opacity 0.7s ease 0.1s, transform 0.7s ease 0.1s',
+            display:       'flex',
             flexDirection: 'column',
           }}
         >
@@ -58,10 +62,10 @@ const About = () => {
           ref={rightRef}
           className='flex-1'
           style={{
-            opacity: rightVisible ? 1 : 0,
-            transform: rightVisible ? 'translateX(0)' : 'translateX(40px)',
-            transition: 'opacity 0.7s ease 0.25s, transform 0.7s ease 0.25s',
-            display: 'flex',
+            opacity:       rightVisible ? 1 : 0,
+            transform:     rightVisible ? 'translateX(0)' : 'translateX(40px)',
+            transition:    'opacity 0.7s ease 0.25s, transform 0.7s ease 0.25s',
+            display:       'flex',
             flexDirection: 'column',
           }}
         >

@@ -15,9 +15,9 @@ const MailIcon = () => (
 )
 
 const LINKS = [
-  { label: 'GitHub', href: 'https://github.com/tithy-ghosh', icon: <GithubIcon /> },
+  { label: 'GitHub',   href: 'https://github.com/tithy-ghosh',                 icon: <GithubIcon /> },
   { label: 'LinkedIn', href: 'https://www.linkedin.com/in/shrabony-ghosh-tithy', icon: <LinkedInIcon /> },
-  { label: 'Email', href: 'mailto:sgt.tithy.717@gmail.com', icon: <MailIcon /> },
+  { label: 'Email',    href: 'mailto:sgt.tithy.717@gmail.com',                  icon: <MailIcon /> },
 ]
 
 const NAV_LINKS = ['Home', 'About', 'Skills', 'Projects', 'Contact']
@@ -27,9 +27,15 @@ export default function Footer() {
     <footer style={{ background: '#0a0a0f', borderTop: '1px solid rgba(255,255,255,0.04)' }}>
       <div className="max-w-6xl mx-auto px-4 sm:px-10 py-14">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-          {/* Brand */}
+
+          {/* Brand with glitch logo */}
           <div>
-            <a href="#" className="text-2xl uppercase text-white" style={{ fontFamily: 'fantasy' }}>
+            <a
+              href="#"
+              className="glitch-logo text-2xl uppercase text-white"
+              style={{ fontFamily: 'fantasy', textDecoration: 'none' }}
+              data-text="Tithy"
+            >
               Ti<span className="text-font">t</span>h<span className="text-font">y</span>
             </a>
             <p className="text-[13px] text-[#6b6890] leading-relaxed mt-4 max-w-[260px]">
@@ -39,7 +45,10 @@ export default function Footer() {
 
           {/* Quick links */}
           <div>
-            <p className="text-[11px] tracking-[0.15em] uppercase text-[#8b5cf6] mb-5" style={{ fontFamily: '"JetBrains Mono", monospace' }}>
+            <p
+              className="text-[11px] tracking-[0.15em] uppercase text-[#8b5cf6] mb-5"
+              style={{ fontFamily: '"JetBrains Mono", monospace' }}
+            >
               Navigation
             </p>
             <ul className="flex flex-col gap-3">
@@ -59,7 +68,10 @@ export default function Footer() {
 
           {/* Social */}
           <div>
-            <p className="text-[11px] tracking-[0.15em] uppercase text-[#8b5cf6] mb-5" style={{ fontFamily: '"JetBrains Mono", monospace' }}>
+            <p
+              className="text-[11px] tracking-[0.15em] uppercase text-[#8b5cf6] mb-5"
+              style={{ fontFamily: '"JetBrains Mono", monospace' }}
+            >
               Connect
             </p>
             <div className="flex gap-4">

@@ -1,136 +1,234 @@
 @import "tailwindcss";
+
 *, *::before, *::after {
   box-sizing: border-box;
 }
-body{
+
+body {
   background-color: #0a0a0f;
   color: #D1D5DB;
   overflow-x: hidden;
 }
-html{
+
+html {
   scroll-behavior: smooth;
   overflow-x: hidden;
 }
-.text-font{
-  background: linear-gradient(90deg, #8B5CF6 0%, #06B6D4 100%);-webkit-background-clip: text;
+
+/* ── Core gradient text ── */
+.text-font {
+  background: linear-gradient(90deg, #8B5CF6 0%, #06B6D4 100%);
+  -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
-.jetbrains-mono-font{
-  font-family: "JetBrains Mono", monospace;
-}
-.sora-font{
-  font-family: "Sora", sans-serif;
-}
+
+/* ── Font utilities ── */
+.jetbrains-mono-font { font-family: "JetBrains Mono", monospace; }
+.sora-font           { font-family: "Sora", sans-serif; }
+
+/* ── Hero background with animated aurora ── */
 .hero-glow {
   position: relative;
-  background-color: #000;
-  background: 
-    radial-gradient(circle at 80% 60%, #00b4ff2e, transparent 45%),
-    radial-gradient(circle at 50% 100%, #a05aff1f, transparent 50%),
-    linear-gradient(-180deg, #070710 0%, #0b0b14 50%, #06060c 100%);
+  background-color: #050509;
+  background: #050509;
+  overflow: hidden;
+}
+
+/* Grain texture overlay */
+.hero-glow::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.038;
+  pointer-events: none;
+  z-index: 9998;
+}
+
+/* ── Aurora blob animations ── */
+@keyframes aurora1 {
+  0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+  33%       { transform: translate(40px, -30px) scale(1.12) rotate(5deg); }
+  66%       { transform: translate(-20px, 20px) scale(0.95) rotate(-3deg); }
+}
+@keyframes aurora2 {
+  0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+  33%       { transform: translate(-50px, 25px) scale(1.1) rotate(-6deg); }
+  66%       { transform: translate(30px, -15px) scale(1.05) rotate(4deg); }
+}
+@keyframes aurora3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%       { transform: translate(20px, 30px) scale(1.08); }
+}
+
+/* ── Scroll progress bar ── */
+.scroll-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #8B5CF6, #06B6D4);
+  box-shadow: 0 0 10px rgba(139, 92, 246, 0.7), 0 0 20px rgba(6, 182, 212, 0.4);
+  z-index: 99999;
+  transition: width 0.05s linear;
+}
+
+/* ── Magnetic button ── */
+.magnetic-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+}
+
+/* ── Glitch logo effect ── */
+@keyframes glitch-skew {
+  0%, 100% { transform: skewX(0deg); }
+  20%       { transform: skewX(-4deg); }
+  40%       { transform: skewX(3deg); }
+  60%       { transform: skewX(-2deg); }
+  80%       { transform: skewX(1deg); }
+}
+@keyframes glitch-clip-1 {
+  0%        { clip-path: inset(40% 0 58% 0); transform: translate(-3px, 0); }
+  25%       { clip-path: inset(10% 0 85% 0); transform: translate(3px, 0); }
+  50%       { clip-path: inset(72% 0 5% 0);  transform: translate(-3px, 0); }
+  75%       { clip-path: inset(20% 0 60% 0); transform: translate(3px, 0); }
+  100%      { clip-path: inset(40% 0 58% 0); transform: translate(-3px, 0); }
+}
+@keyframes glitch-clip-2 {
+  0%        { clip-path: inset(65% 0 12% 0); transform: translate(3px, 0); }
+  25%       { clip-path: inset(5% 0 80% 0);  transform: translate(-3px, 0); }
+  50%       { clip-path: inset(30% 0 50% 0); transform: translate(3px, 0); }
+  75%       { clip-path: inset(55% 0 25% 0); transform: translate(-3px, 0); }
+  100%      { clip-path: inset(65% 0 12% 0); transform: translate(3px, 0); }
+}
+.glitch-logo {
+  position: relative;
+  display: inline-block;
+}
+.glitch-logo::before,
+.glitch-logo::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  font-family: fantasy;
+  font-size: inherit;
+  color: inherit;
+  transition: opacity 0.1s;
+}
+.glitch-logo::before { color: #8B5CF6; }
+.glitch-logo::after  { color: #06B6D4; }
+.glitch-logo:hover   { animation: glitch-skew 0.5s ease-in-out; }
+.glitch-logo:hover::before {
+  opacity: 0.7;
+  animation: glitch-clip-1 0.5s steps(1) infinite;
+}
+.glitch-logo:hover::after {
+  opacity: 0.7;
+  animation: glitch-clip-2 0.5s steps(1) infinite;
+}
+
+/* ── Animated conic border on skill cards ── */
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+@keyframes rotateBorder {
+  to { --angle: 360deg; }
+}
+.skill-glow-border {
+  background: conic-gradient(from var(--angle), #8B5CF6 0%, #06B6D4 40%, #8B5CF6 100%);
+  animation: rotateBorder 3s linear infinite;
+  padding: 1.5px;
+  border-radius: 18px;
+}
+
+/* ── Input focus glow ── */
+.input-purple-glow:focus {
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.18), 0 0 16px rgba(139, 92, 246, 0.12) !important;
+}
+.input-cyan-glow:focus {
+  box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.18), 0 0 16px rgba(6, 182, 212, 0.12) !important;
 }
 
 /* ── Global animation keyframes ── */
-
-/* Fade up */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(40px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-
-/* Fade down */
 @keyframes fadeDown {
   from { opacity: 0; transform: translateY(-40px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-
-/* Fade left (slide from right) */
 @keyframes fadeLeft {
   from { opacity: 0; transform: translateX(60px); }
   to   { opacity: 1; transform: translateX(0); }
 }
-
-/* Fade right (slide from left) */
 @keyframes fadeRight {
   from { opacity: 0; transform: translateX(-60px); }
   to   { opacity: 1; transform: translateX(0); }
 }
-
-/* Zoom in */
 @keyframes zoomIn {
   from { opacity: 0; transform: scale(0.8); }
   to   { opacity: 1; transform: scale(1); }
 }
-
-/* Flip in X */
 @keyframes flipInX {
   from { opacity: 0; transform: perspective(600px) rotateX(-70deg); }
   to   { opacity: 1; transform: perspective(600px) rotateX(0deg); }
 }
-
-/* Flip in Y */
 @keyframes flipInY {
   from { opacity: 0; transform: perspective(600px) rotateY(-70deg); }
   to   { opacity: 1; transform: perspective(600px) rotateY(0deg); }
 }
-
-/* Swing in from top */
 @keyframes swingIn {
   0%   { opacity: 0; transform: rotate(-10deg) translateY(-30px); }
   60%  { transform: rotate(3deg) translateY(4px); }
   100% { opacity: 1; transform: rotate(0deg) translateY(0); }
 }
-
-/* Blur in */
 @keyframes blurIn {
   from { opacity: 0; filter: blur(16px); transform: scale(1.04); }
   to   { opacity: 1; filter: blur(0px);  transform: scale(1); }
 }
-
-/* Stretch in */
 @keyframes stretchIn {
   from { opacity: 0; transform: scaleX(0.4) scaleY(1.2); }
-  to   { opacity: 1; transform: scaleX(1)   scaleY(1); }
+  to   { opacity: 1; transform: scaleX(1) scaleY(1); }
 }
-
-/* Rise (clip from bottom) */
 @keyframes riseUp {
   from { opacity: 0; transform: translateY(100%) skewY(3deg); }
-  to   { opacity: 1; transform: translateY(0)    skewY(0deg); }
+  to   { opacity: 1; transform: translateY(0) skewY(0deg); }
 }
-
-/* Bounce in */
 @keyframes bounceIn {
   0%   { opacity: 0; transform: scale(0.3); }
   50%  { opacity: 1; transform: scale(1.08); }
   70%  { transform: scale(0.95); }
   100% { transform: scale(1); }
 }
-
-/* Glide in (smooth spring-like) */
 @keyframes glideIn {
   from { opacity: 0; transform: translateY(24px) scale(0.97); }
-  to   { opacity: 1; transform: translateY(0)    scale(1); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 /* Utility classes */
-.anim-fade-up       { animation: fadeUp   0.7s cubic-bezier(0.16,1,0.3,1) both; }
-.anim-fade-down     { animation: fadeDown 0.7s cubic-bezier(0.16,1,0.3,1) both; }
-.anim-fade-left     { animation: fadeLeft 0.7s cubic-bezier(0.16,1,0.3,1) both; }
-.anim-fade-right    { animation: fadeRight 0.7s cubic-bezier(0.16,1,0.3,1) both; }
-.anim-zoom-in       { animation: zoomIn   0.6s cubic-bezier(0.16,1,0.3,1) both; }
-.anim-flip-x        { animation: flipInX  0.7s cubic-bezier(0.16,1,0.3,1) both; }
-.anim-flip-y        { animation: flipInY  0.7s cubic-bezier(0.16,1,0.3,1) both; }
-.anim-swing         { animation: swingIn  0.8s cubic-bezier(0.16,1,0.3,1) both; }
-.anim-blur-in       { animation: blurIn   0.8s ease both; }
-.anim-stretch       { animation: stretchIn 0.6s cubic-bezier(0.16,1,0.3,1) both; }
-.anim-rise          { animation: riseUp   0.7s cubic-bezier(0.16,1,0.3,1) both; }
-.anim-bounce-in     { animation: bounceIn 0.7s cubic-bezier(0.34,1.56,0.64,1) both; }
-.anim-glide-in      { animation: glideIn  0.7s cubic-bezier(0.16,1,0.3,1) both; }
+.anim-fade-up    { animation: fadeUp    0.7s cubic-bezier(0.16,1,0.3,1) both; }
+.anim-fade-down  { animation: fadeDown  0.7s cubic-bezier(0.16,1,0.3,1) both; }
+.anim-fade-left  { animation: fadeLeft  0.7s cubic-bezier(0.16,1,0.3,1) both; }
+.anim-fade-right { animation: fadeRight 0.7s cubic-bezier(0.16,1,0.3,1) both; }
+.anim-zoom-in    { animation: zoomIn    0.6s cubic-bezier(0.16,1,0.3,1) both; }
+.anim-flip-x     { animation: flipInX   0.7s cubic-bezier(0.16,1,0.3,1) both; }
+.anim-flip-y     { animation: flipInY   0.7s cubic-bezier(0.16,1,0.3,1) both; }
+.anim-swing      { animation: swingIn   0.8s cubic-bezier(0.16,1,0.3,1) both; }
+.anim-blur-in    { animation: blurIn    0.8s ease both; }
+.anim-stretch    { animation: stretchIn 0.6s cubic-bezier(0.16,1,0.3,1) both; }
+.anim-rise       { animation: riseUp    0.7s cubic-bezier(0.16,1,0.3,1) both; }
+.anim-bounce-in  { animation: bounceIn  0.7s cubic-bezier(0.34,1.56,0.64,1) both; }
+.anim-glide-in   { animation: glideIn   0.7s cubic-bezier(0.16,1,0.3,1) both; }
 
 /* Paused until JS adds .is-visible */
-[data-anim] { animation-play-state: paused; opacity: 0; }
+[data-anim]           { animation-play-state: paused; opacity: 0; }
 [data-anim].is-visible { animation-play-state: running; }
 
 /* Education section animations */
